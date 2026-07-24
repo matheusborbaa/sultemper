@@ -1,0 +1,4 @@
+# Protege o arquivo de credenciais contra acesso direto
+<Files "senha.json">
+  Require all denied
+</Files>

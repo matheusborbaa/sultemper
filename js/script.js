@@ -1,9 +1,133 @@
 /* ============================================================
    Sultemper — interações da landing page
+   Conteúdo dinâmico carregado de dados.json (editável no /admin)
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
-  /* ---------- Navegação ativa conforme a seção visível ---------- */
+  /* ============================================================
+     UTILIDADES
+     ============================================================ */
+  const esc = (t) =>
+    String(t ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  /** Converte texto simples com **negrito** e quebras de linha em HTML seguro */
+  const rico = (texto) =>
+    esc(texto)
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n/g, '<br />');
+
+  /* ============================================================
+     ESTADO DINÂMICO (padrões substituídos pelo dados.json)
+     ============================================================ */
+  let testimonials = [
+    {
+      foto: 'https://www.figma.com/api/mcp/asset/5e543a59-fb59-4c5b-88b1-29cc90d7b50f',
+      nome: 'Arlingo Ludwig - Gerente Operacional',
+      empresa: 'Shopping Neumarkt/Blumenau',
+      texto:
+        '" A SulTemper é nosso fornecedor a mais de dez anos, com soluções técnicas criativas e de qualidade, e com diversidade de serviços. Nos atende com cumprimento de prazos e qualidade de serviços. "',
+    },
+  ];
+  let whatsappNumero = '';
+
+  /* ============================================================
+     HIDRATAÇÃO A PARTIR DO dados.json
+     ============================================================ */
+  const aplicarDados = (d) => {
+    if (!d || typeof d !== 'object') return;
+
+    whatsappNumero = d.whatsapp || '';
+
+    // Hero
+    if (d.hero) {
+      if (d.hero.titulo) document.getElementById('heroTitulo').textContent = d.hero.titulo;
+      if (d.hero.destaque) document.getElementById('heroDestaque').textContent = ' ' + d.hero.destaque;
+      if (d.hero.subtitulo) document.getElementById('heroSubtitulo').textContent = d.hero.subtitulo;
+    }
+
+    // Sobre
+    if (d.sobre) {
+      if (d.sobre.texto) document.getElementById('sobreTexto').innerHTML = rico(d.sobre.texto);
+      const statCards = document.querySelectorAll('.stat-card');
+      (d.sobre.stats || []).forEach((stat, i) => {
+        if (!statCards[i]) return;
+        statCards[i].querySelector('.stat-card__number').textContent = stat.numero;
+        statCards[i].querySelector('.stat-card__label').textContent = stat.label;
+      });
+    }
+
+    // Soluções
+    if (d.solucoes) {
+      if (d.solucoes.descricao) {
+        document.getElementById('solucoesDescricao').innerHTML = rico(d.solucoes.descricao);
+      }
+      if (Array.isArray(d.solucoes.cards) && d.solucoes.cards.length) {
+        document.getElementById('solutionsTrack').innerHTML = d.solucoes.cards
+          .map(
+            (c) => `
+          <article class="sol-card">
+            <div class="sol-card__img"><img src="${esc(c.imagem)}" alt="${esc(c.titulo)}" /></div>
+            <div class="sol-card__body">
+              <h3 class="sol-card__title">${esc(c.titulo)}</h3>
+              <p class="sol-card__text">${esc(c.texto)}</p>
+            </div>
+          </article>`
+          )
+          .join('');
+      }
+    }
+
+    // Processo
+    if (d.processo) {
+      if (d.processo.subtitulo) {
+        document.getElementById('processoSubtitulo').textContent = d.processo.subtitulo;
+      }
+      const labels = document.querySelectorAll('.process-card__label');
+      (d.processo.etapas || []).forEach((etapa, i) => {
+        if (labels[i]) labels[i].innerHTML = rico(etapa);
+      });
+    }
+
+    // Depoimentos
+    if (Array.isArray(d.depoimentos) && d.depoimentos.length) {
+      testimonials = d.depoimentos;
+      current = 0;
+      renderTestimonial(0, false);
+    }
+
+    // Portfólio
+    if (Array.isArray(d.portfolio) && d.portfolio.length) {
+      document.querySelector('.gallery').innerHTML = d.portfolio
+        .map((url) => `<div class="gallery__item"><img src="${esc(url)}" alt="Projeto Sultemper" /></div>`)
+        .join('');
+    }
+
+    // Rodapé
+    if (d.rodape) {
+      if (d.rodape.copyright) document.getElementById('footerCopy').textContent = d.rodape.copyright;
+      const setLink = (id, url) => {
+        const el = document.getElementById(id);
+        if (el && url) el.href = url;
+      };
+      setLink('socFacebook', d.rodape.facebook);
+      setLink('socLinkedin', d.rodape.linkedin);
+      setLink('socInstagram', d.rodape.instagram);
+    }
+    if (whatsappNumero) {
+      document.getElementById('socWhatsapp').href = `https://wa.me/${whatsappNumero}`;
+    }
+  };
+
+  fetch('dados.json', { cache: 'no-store' })
+    .then((r) => (r.ok ? r.json() : null))
+    .then(aplicarDados)
+    .catch(() => {
+      /* sem servidor (arquivo aberto localmente): mantém o conteúdo padrão */
+    });
+
+  /* ============================================================
+     NAVEGAÇÃO ATIVA
+     ============================================================ */
   const navLinks = document.querySelectorAll('.header__nav .nav-link');
   const sections = ['inicio', 'sobre', 'solucoes', 'portfolio']
     .map((id) => document.getElementById(id))
@@ -25,30 +149,22 @@ document.addEventListener('DOMContentLoaded', () => {
   );
   sections.forEach((section) => observer.observe(section));
 
-  /* ---------- Carrossel de soluções ---------- */
+  /* ============================================================
+     CARROSSEL DE SOLUÇÕES
+     ============================================================ */
   const track = document.getElementById('solutionsTrack');
   document.querySelectorAll('.solutions__arrow').forEach((btn) => {
     btn.addEventListener('click', () => {
       const dir = Number(btn.dataset.dir) || 1;
       const card = track.querySelector('.sol-card');
-      const step = card ? card.offsetWidth + 16 : 385;
+      const step = card ? card.offsetWidth + 51 : 420;
       track.scrollBy({ left: dir * step, behavior: 'smooth' });
     });
   });
 
-  /* ---------- Depoimentos ---------- */
-  const testimonials = [
-    {
-      avatar: 'https://www.figma.com/api/mcp/asset/5e543a59-fb59-4c5b-88b1-29cc90d7b50f',
-      name: 'Arlingo Ludwig - Gerente Operacional',
-      company: 'Shopping Neumarkt/Blumenau',
-      quote:
-        '" A SulTemper é nosso fornecedor a mais de dez anos, com soluções técnicas criativas e de qualidade, e com diversidade de serviços. Nos atende com cumprimento de prazos e qualidade de serviços. "',
-    },
-    // Adicione mais depoimentos aqui:
-    // { avatar: 'caminho/da/foto.jpg', name: 'Nome - Cargo', company: 'Empresa/Cidade', quote: '" Depoimento... "' },
-  ];
-
+  /* ============================================================
+     DEPOIMENTOS
+     ============================================================ */
   let current = 0;
   const card = document.getElementById('testimonialCard');
   const avatarEl = document.getElementById('tAvatar');
@@ -56,17 +172,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const companyEl = document.getElementById('tCompany');
   const quoteEl = document.getElementById('tQuote');
 
-  const renderTestimonial = (index) => {
+  const renderTestimonial = (index, animar = true) => {
     const item = testimonials[index];
     if (!item) return;
-    card.classList.add('is-fading');
-    setTimeout(() => {
-      avatarEl.src = item.avatar;
-      nameEl.textContent = item.name;
-      companyEl.textContent = item.company;
-      quoteEl.textContent = item.quote;
+    const aplicar = () => {
+      avatarEl.src = item.foto || '';
+      nameEl.textContent = item.nome || '';
+      companyEl.textContent = item.empresa || '';
+      quoteEl.textContent = item.texto || '';
       card.classList.remove('is-fading');
-    }, 250);
+    };
+    if (animar) {
+      card.classList.add('is-fading');
+      setTimeout(aplicar, 250);
+    } else {
+      aplicar();
+    }
   };
 
   const stepTestimonial = (dir) => {
@@ -78,7 +199,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('tPrev').addEventListener('click', () => stepTestimonial(-1));
   document.getElementById('tNext').addEventListener('click', () => stepTestimonial(1));
 
-  /* ---------- Header fixo com sombra ao rolar ---------- */
+  /* ============================================================
+     HEADER FIXO COM SOMBRA
+     ============================================================ */
   const header = document.querySelector('.header');
   const onScroll = () => {
     header.classList.toggle('header--scrolled', window.scrollY > 10);
@@ -86,7 +209,9 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  /* ---------- Formulários de orçamento (envio por e-mail via enviar.php) ---------- */
+  /* ============================================================
+     FORMULÁRIOS DE ORÇAMENTO (envio por e-mail via enviar.php)
+     ============================================================ */
   document.querySelectorAll('.quote__form').forEach((form) => {
     const status = form.parentElement.querySelector('.form-status') || form.querySelector('.form-status');
     const button = form.querySelector('button[type="submit"]');

@@ -409,12 +409,20 @@ img { display: block; }
 
 .solutions__track {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 51px;
   align-items: center;
   width: 100%;
   height: 552px;
   position: relative;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
 }
+
+.solutions__track::-webkit-scrollbar { display: none; }
+
+.sol-card { flex-shrink: 0; }
 
 .sol-card {
   display: flex;
@@ -831,3 +839,7 @@ img { display: block; }
 .social-btn:hover { background: rgba(255, 255, 255, 0.22); }
 
 .social-btn img { filter: brightness(0) invert(1); }
+
+/* ---------- Negritos vindos do painel (**texto**) ---------- */
+.about__text strong { color: var(--arrow-blue); font-weight: 800; }
+.solutions__desc strong { font-weight: 700; }
