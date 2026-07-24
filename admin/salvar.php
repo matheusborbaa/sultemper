@@ -62,10 +62,18 @@ function limpar($valor) {
     return trim(strip_tags((string) $valor));
 }
 
+/* Códigos de rastreamento: preserva o HTML (só o admin autenticado chega aqui) */
+$rastreamento = [
+    'head' => mb_substr(trim((string) ($novos['rastreamento']['head'] ?? '')), 0, 20000),
+    'body' => mb_substr(trim((string) ($novos['rastreamento']['body'] ?? '')), 0, 20000),
+];
+unset($novos['rastreamento']);
+
 $novos = limpar($novos);
+$novos['rastreamento'] = $rastreamento;
 
 /* Estrutura permitida — ignora chaves desconhecidas */
-$permitido = ['whatsapp', 'hero', 'sobre', 'solucoes', 'processo', 'depoimentos', 'portfolio', 'rodape'];
+$permitido = ['whatsapp', 'hero', 'sobre', 'solucoes', 'processo', 'depoimentos', 'portfolio', 'rodape', 'rastreamento'];
 $dados = array_intersect_key($novos, array_flip($permitido));
 
 /* WhatsApp: só dígitos */

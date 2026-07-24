@@ -63,7 +63,14 @@ function validarCsrf() {
 }
 
 function lerDados() {
-    if (!file_exists(ARQUIVO_DADOS)) return [];
+    // Se o dados.json ainda não existe (primeiro deploy), usa o modelo de exemplo
+    if (!file_exists(ARQUIVO_DADOS)) {
+        $exemplo = dirname(__DIR__) . '/dados.exemplo.json';
+        if (file_exists($exemplo)) {
+            return json_decode(file_get_contents($exemplo), true) ?: [];
+        }
+        return [];
+    }
     return json_decode(file_get_contents(ARQUIVO_DADOS), true) ?: [];
 }
 

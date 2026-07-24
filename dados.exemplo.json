@@ -1,0 +1,77 @@
+{
+  "whatsapp": "5547999999999",
+  "hero": {
+    "titulo": "Vidros e esquadrias para obras que exigem",
+    "destaque": "segurança, precisão e acabamento.",
+    "subtitulo": "Desenvolvemos soluções em vidros temperados, fachadas, sistemas de abertura e esquadrias de alumínio para projetos residenciais, comerciais e corporativos."
+  },
+  "sobre": {
+    "texto": "Com mais de duas décadas de experiência, a **Sultemper** dedica-se ao ramo de construção civil fornecendo mão de obra qualificada e sistemas de altíssimo nível para promover requinte, beleza e sofisticação em sua obra.",
+    "stats": [
+      {
+        "numero": "+20",
+        "label": "anos de experiência"
+      },
+      {
+        "numero": "+3000",
+        "label": "clientes atendidos"
+      }
+    ]
+  },
+  "solucoes": {
+    "descricao": "Aliamos design, praticidade e rigor técnico. Com sistemas certificados e equipe qualificada, garantimos **segurança** e **conforto** para sua casa ou empresa. Otimize seu espaço com elegância e durabilidade em qualquer estação.",
+    "cards": [
+      {
+        "titulo": "Esquadrias em alumínio",
+        "texto": "Esquadrias de alumínio, com alta qualidade e segurança. Linha Tradicional, Suprema e Gold",
+        "imagem": "assets/img/card-esquadrias.png"
+      },
+      {
+        "titulo": "Sistema 100% de Abertura",
+        "texto": "O sistema de fechamento pode ser utilizado em várias versões, desde residências ou em âmbito profissional.",
+        "imagem": "assets/img/card-abertura.png"
+      },
+      {
+        "titulo": "Projeto Personalizado",
+        "texto": "Soluções inteligentes com alto padrão de qualidade, produzidas com exclusividades, perfeito para projetos arquitetônicos arrojados.",
+        "imagem": "assets/img/card-projeto.png"
+      }
+    ]
+  },
+  "processo": {
+    "subtitulo": "Veja abaixo como funciona o nosso processo de trabalho",
+    "etapas": [
+      "Primeiro\ncontato;",
+      "Identificar\no problema;",
+      "Adequar\nsoluções;",
+      "Execução\nda obra;",
+      "Pesquisa\nde satisfação."
+    ]
+  },
+  "depoimentos": [
+    {
+      "nome": "Arlingo Ludwig - Gerente Operacional",
+      "empresa": "Shopping Neumarkt/Blumenau",
+      "texto": "\" A SulTemper é nosso fornecedor a mais de dez anos, com soluções técnicas criativas e de qualidade, e com diversidade de serviços. Nos atende com cumprimento de prazos e qualidade de serviços. \"",
+      "foto": "assets/img/avatar-arlingo.png"
+    }
+  ],
+  "portfolio": [
+    "assets/img/galeria-1.png",
+    "assets/img/galeria-2.png",
+    "assets/img/galeria-3.png",
+    "assets/img/galeria-4.png",
+    "assets/img/galeria-5.png",
+    "assets/img/card-projeto.png"
+  ],
+  "rodape": {
+    "copyright": "© 2026 Copyright - Sultemper",
+    "facebook": "",
+    "linkedin": "",
+    "instagram": ""
+  },
+  "rastreamento": {
+    "head": "",
+    "body": ""
+  }
+}

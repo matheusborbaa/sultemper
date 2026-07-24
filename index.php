@@ -1,0 +1,289 @@
+<?php
+/* Códigos de rastreamento (Pixel, Google Tag, GTM...) configurados no painel /admin */
+$__dados = [];
+$__arq = file_exists(__DIR__ . '/dados.json') ? __DIR__ . '/dados.json' : __DIR__ . '/dados.exemplo.json';
+if (file_exists($__arq)) {
+    $__dados = json_decode(file_get_contents($__arq), true) ?: [];
+}
+$__head = $__dados['rastreamento']['head'] ?? '';
+$__body = $__dados['rastreamento']['body'] ?? '';
+?>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sultemper — Vidros Temperados e Esquadrias</title>
+  <link rel="stylesheet" href="css/style.css" />
+<?php if ($__head !== '') { echo "\n  <!-- Rastreamento (head) -->\n" . $__head . "\n"; } ?>
+</head>
+<body>
+<?php if ($__body !== '') { echo "  <!-- Rastreamento (body) -->\n" . $__body . "\n"; } ?>
+  <!-- Loader Sultemper -->
+  <div class="loader" id="loader">
+    <div class="loader__inner">
+      <div class="loader__panes" aria-hidden="true"><span></span><span></span><span></span></div>
+      <p class="loader__brand"><b>SUL</b>TEMPER</p>
+      <p class="loader__tag">Vidros Temperados</p>
+      <div class="loader__track"><span class="loader__fill" id="loaderFill"></span></div>
+      <p class="loader__pct" id="loaderPct">0%</p>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <!-- ============ HEADER ============ -->
+    <header class="header">
+      <a href="#inicio" class="header__logo">
+        <img src="assets/img/logo.svg" alt="Sultemper — Vidros Temperados" />
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="header__nav" id="headerNav">
+        <a href="#inicio" class="nav-link">Início</a>
+        <a href="#sobre" class="nav-link">Sobre</a>
+        <a href="#solucoes" class="nav-link nav-link--active">Soluções</a>
+        <a href="#portfolio" class="nav-link">Portfólio</a>
+        <a href="#orcamento" class="btn-gradient btn-gradient--simple">Solicitar orçamento</a>
+      </nav>
+    </header>
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="inicio">
+      <div class="hero__bg" aria-hidden="true">
+        <img src="assets/img/hero-bg.png" alt="" />
+        <div class="hero__overlay"></div>
+      </div>
+      <h1 class="title-xl hero__title"><span id="heroTitulo">Vidros e esquadrias para obras que exigem</span> <span class="title-xl__accent" id="heroDestaque">segurança, precisão e acabamento.</span></h1>
+      <p class="hero__text" id="heroSubtitulo">Desenvolvemos soluções em vidros temperados, fachadas, sistemas de abertura e esquadrias de alumínio para projetos residenciais, comerciais e corporativos.</p>
+      <a href="#orcamento" class="btn-gradient btn-gradient--icon">
+        <span class="btn-gradient__circle">
+          <img src="assets/icons/bell.svg" alt="" width="15" height="14" />
+        </span>
+        Solicitar orçamento
+      </a>
+    </section>
+
+    <!-- ============ SOBRE / QUALIDADE ============ -->
+    <section class="about" id="sobre">
+      <div class="about__glass" aria-hidden="true">
+        <img src="assets/img/vidro.png" alt="" />
+      </div>
+      <h2 class="title-xl">Serviço de <strong>qualidade</strong>.&nbsp; <span class="title-xl__accent title-xl__accent--black">Valor incomparável.&nbsp;</span></h2>
+      <p class="about__text" id="sobreTexto">Com mais de duas décadas de experiência, a <strong class="about__brand">Sultemper</strong> dedica-se ao ramo de construção civil fornecendo mão de obra qualificada e sistemas de altíssimo nível para promover requinte, beleza e sofisticação em sua obra.</p>
+      <div class="stats">
+        <div class="stat-card">
+          <p class="stat-card__number">+20</p>
+          <p class="stat-card__label">anos de experiência</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-card__number">+3000</p>
+          <p class="stat-card__label">clientes atendidos</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SOLUÇÕES ============ -->
+    <section class="solutions" id="solucoes">
+      <div class="solutions__glow" aria-hidden="true"></div>
+      <div class="solutions__head">
+        <h2 class="title-xl title-xl--white"><em class="solutions__em">Nossas </em><strong>soluções</strong></h2>
+        <p class="solutions__desc" id="solucoesDescricao">Aliamos design, praticidade e rigor técnico. Com sistemas certificados&nbsp; e equipe qualificada, garantimos <strong>segurança</strong> e <strong>conforto</strong> para sua casa ou empresa. Otimize seu espaço com elegância e durabilidade em qualquer estação.</p>
+      </div>
+      <div class="solutions__track" id="solutionsTrack">
+        <article class="sol-card">
+          <div class="sol-card__img">
+            <img src="assets/img/card-esquadrias.png" alt="Esquadrias em alumínio" />
+          </div>
+          <div class="sol-card__body">
+            <h3 class="sol-card__title">Esquadrias em alumínio</h3>
+            <p class="sol-card__text">Esquadrias de alumínio, com alta qualidade e segurança. Linha Tradicional, Suprema e Gold</p>
+          </div>
+        </article>
+        <article class="sol-card">
+          <div class="sol-card__img">
+            <img src="assets/img/card-abertura.png" alt="Sistema 100% de Abertura" />
+          </div>
+          <div class="sol-card__body">
+            <h3 class="sol-card__title">Sistema 100% de Abertura</h3>
+            <p class="sol-card__text">O sistema de fechamento pode ser utilizado em várias versões, desde residências ou em âmbito profissional.</p>
+          </div>
+        </article>
+        <article class="sol-card">
+          <div class="sol-card__img">
+            <img src="assets/img/card-projeto.png" alt="Projeto Personalizado" />
+          </div>
+          <div class="sol-card__body">
+            <h3 class="sol-card__title">Projeto Personalizado</h3>
+            <p class="sol-card__text">Soluções inteligentes com alto padrão de qualidade, produzidas com exclusividades, perfeito para projetos arquitetônicos arrojados.</p>
+          </div>
+        </article>
+      </div>
+      <div class="solutions__nav">
+        <button class="arrow-btn solutions__arrow solutions__arrow--prev" data-dir="-1" aria-label="Anterior">
+          <img src="assets/icons/chevron.svg" alt="" />
+        </button>
+        <button class="arrow-btn solutions__arrow solutions__arrow--next" data-dir="1" aria-label="Próximo">
+          <img src="assets/icons/chevron.svg" alt="" />
+        </button>
+      </div>
+    </section>
+
+    <!-- ============ ORÇAMENTO (horizontal) ============ -->
+    <section class="quote" id="orcamento">
+      <div class="glow glow--right" aria-hidden="true"></div>
+      <div class="quote__head">
+        <h2 class="title-xl">Solicite um <span class="title-xl__accent title-xl__accent--bold">orçamento!</span></h2>
+        <p class="quote__sub">Informe os seus dados abaixo para solicitar um orçamento gratuito. <strong class="quote__sub-strong">Retornaremos em até 24 horas úteis.</strong></p>
+      </div>
+      <form class="quote__form quote__form--row" action="enviar.php" method="post" novalidate>
+        <input type="text" name="site" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="field">
+          <label class="field__label" for="q1-nome">Seu nome</label>
+          <div class="field__input">
+            <img src="assets/icons/profile.svg" alt="" width="24" height="24" />
+            <input type="text" id="q1-nome" name="nome" autocomplete="name" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="field__label" for="q1-tel">Telefone ou WhatsApp</label>
+          <div class="field__input">
+            <img src="assets/icons/phone.svg" alt="" width="24" height="24" />
+            <input type="tel" id="q1-tel" name="telefone" autocomplete="tel" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="field__label" for="q1-end">Enderenço de instalação</label>
+          <div class="field__input">
+            <img src="assets/icons/pin.svg" alt="" width="24" height="24" />
+            <input type="text" id="q1-end" name="endereco" autocomplete="street-address" />
+          </div>
+        </div>
+        <button type="submit" class="btn-gradient btn-gradient--icon">
+          <span class="btn-gradient__circle">
+            <img src="assets/icons/bell.svg" alt="" width="15" height="14" />
+          </span>
+          Solicitar orçamento
+        </button>
+      </form>
+      <p class="form-status" role="status" hidden></p>
+    </section>
+
+    <!-- ============ PROCESSO ============ -->
+    <section class="process">
+      <div class="process__head">
+        <h2 class="title-xl">Conheça <span class="title-xl__accent title-xl__accent--bold">nosso</span> <span class="title-xl__accent">processo.</span></h2>
+        <p class="process__sub" id="processoSubtitulo">Veja abaixo como funciona o nosso processo de trabalho</p>
+      </div>
+      <div class="process__grid">
+        <div class="process-card">
+          <img class="process-card__icon" src="assets/icons/headset.svg" alt="" />
+          <p class="process-card__label">Primeiro<br />contato;</p>
+        </div>
+        <div class="process-card">
+          <img class="process-card__icon" src="assets/icons/thinking.svg" alt="" />
+          <p class="process-card__label">Identificar<br />o problema;</p>
+        </div>
+        <div class="process-card">
+          <img class="process-card__icon" src="assets/icons/check.svg" alt="" />
+          <p class="process-card__label">Adequar<br />soluções;</p>
+        </div>
+        <div class="process-card">
+          <img class="process-card__icon" src="assets/icons/hammer.svg" alt="" />
+          <p class="process-card__label">Execução<br />da obra;</p>
+        </div>
+        <div class="process-card">
+          <img class="process-card__icon" src="assets/icons/handshake.svg" alt="" />
+          <p class="process-card__label">Pesquisa<br />de satisfação.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GALERIA / PORTFÓLIO ============ -->
+    <section class="gallery" id="portfolio">
+      <div class="gallery__item"><img src="assets/img/galeria-1.png" alt="Projeto Sultemper" /></div>
+      <div class="gallery__item"><img src="assets/img/galeria-2.png" alt="Projeto Sultemper" /></div>
+      <div class="gallery__item"><img src="assets/img/galeria-3.png" alt="Projeto Sultemper" /></div>
+      <div class="gallery__item"><img src="assets/img/galeria-4.png" alt="Projeto Sultemper" /></div>
+      <div class="gallery__item"><img src="assets/img/galeria-5.png" alt="Projeto Sultemper" /></div>
+      <div class="gallery__item"><img src="assets/img/card-projeto.png" alt="Projeto Sultemper" /></div>
+    </section>
+
+    <!-- ============ DEPOIMENTOS ============ -->
+    <section class="testimonials">
+      <div class="glow glow--left" aria-hidden="true"></div>
+      <div class="testimonials__head">
+        <h2 class="title-xl">O que clientes dizem<br /><span class="title-xl__accent">sobre nosso serviço</span></h2>
+        <p class="testimonials__sub">Veja o que nossos clientes dizem sobre nossos serviços.</p>
+      </div>
+      <div class="testimonial-card" id="testimonialCard">
+        <div class="testimonial-card__person">
+          <img class="testimonial-card__avatar" id="tAvatar" src="assets/img/avatar-arlingo.png" alt="Foto do cliente" />
+          <p class="testimonial-card__name" id="tName">Arlingo Ludwig - Gerente Operacional</p>
+          <p class="testimonial-card__company" id="tCompany">Shopping Neumarkt/Blumenau</p>
+        </div>
+        <p class="testimonial-card__quote" id="tQuote">" A SulTemper é nosso fornecedor a mais de dez anos, com soluções técnicas criativas e de qualidade, e com diversidade de serviços. Nos atende com cumprimento de prazos e qualidade de serviços. "</p>
+      </div>
+      <div class="testimonials__arrows">
+        <button class="arrow-btn arrow-btn--prev" id="tPrev" aria-label="Depoimento anterior">
+          <img src="assets/icons/chevron.svg" alt="" />
+        </button>
+        <button class="arrow-btn" id="tNext" aria-label="Próximo depoimento">
+          <img src="assets/icons/chevron.svg" alt="" />
+        </button>
+      </div>
+    </section>
+
+    <!-- ============ ORÇAMENTO (vertical) ============ -->
+    <section class="quote quote--center">
+      <div class="glow glow--right glow--low" aria-hidden="true"></div>
+      <div class="quote__head quote__head--center">
+        <h2 class="title-xl">Solicite um <span class="title-xl__accent title-xl__accent--bold">orçamento!</span></h2>
+        <p class="quote__sub">Informe os seus dados abaixo para solicitar um orçamento gratuito.<br /><strong class="quote__sub-strong">Retornaremos em até 24 horas úteis.</strong></p>
+      </div>
+      <form class="quote__form quote__form--col" action="enviar.php" method="post" novalidate>
+        <input type="text" name="site" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="field">
+          <label class="field__label" for="q2-nome">Seu nome</label>
+          <div class="field__input">
+            <img src="assets/icons/profile.svg" alt="" width="24" height="24" />
+            <input type="text" id="q2-nome" name="nome" autocomplete="name" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="field__label" for="q2-tel">Telefone ou WhatsApp</label>
+          <div class="field__input">
+            <img src="assets/icons/phone.svg" alt="" width="24" height="24" />
+            <input type="tel" id="q2-tel" name="telefone" autocomplete="tel" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="field__label" for="q2-end">Enderenço de instalação</label>
+          <div class="field__input">
+            <img src="assets/icons/pin.svg" alt="" width="24" height="24" />
+            <input type="text" id="q2-end" name="endereco" autocomplete="street-address" />
+          </div>
+        </div>
+        <button type="submit" class="btn-gradient btn-gradient--full">Solicitar orçamento</button>
+        <p class="form-status" role="status" hidden></p>
+      </form>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+      <div class="footer__inner">
+        <p class="footer__copy" id="footerCopy">© 2026 Copyright - Sultemper</p>
+        <div class="footer__social">
+          <a href="#" class="social-btn" id="socFacebook" aria-label="Facebook" target="_blank" rel="noopener"><img src="assets/icons/facebook.svg" alt="" width="24" height="24" /></a>
+          <a href="#" class="social-btn" id="socWhatsapp" aria-label="WhatsApp" target="_blank" rel="noopener"><img src="assets/icons/whatsapp.svg" alt="" width="20" height="20" /></a>
+          <a href="#" class="social-btn" id="socLinkedin" aria-label="LinkedIn" target="_blank" rel="noopener"><img src="assets/icons/linkedin.svg" alt="" width="20" height="20" /></a>
+          <a href="#" class="social-btn" id="socInstagram" aria-label="Instagram" target="_blank" rel="noopener"><img src="assets/icons/instagram.svg" alt="" width="20" height="20" /></a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+  <script src="js/script.js"></script>
+</body>
+</html>

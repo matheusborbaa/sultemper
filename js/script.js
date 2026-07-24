@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
      ============================================================ */
   let testimonials = [
     {
-      foto: 'https://www.figma.com/api/mcp/asset/b610c17c-5ce4-485a-9cf3-286596962a2a',
+      foto: 'assets/img/avatar-arlingo.png',
       nome: 'Arlingo Ludwig - Gerente Operacional',
       empresa: 'Shopping Neumarkt/Blumenau',
       texto:
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   fetch('dados.json', { cache: 'no-store' })
-    .then((r) => (r.ok ? r.json() : null))
+    .then((r) => (r.ok ? r.json() : fetch('dados.exemplo.json', { cache: 'no-store' }).then((r2) => (r2.ok ? r2.json() : null))))
     .then(aplicarDados)
     .catch(() => {
       /* sem servidor (arquivo aberto localmente): mantém o conteúdo padrão */

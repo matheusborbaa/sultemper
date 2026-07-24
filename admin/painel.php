@@ -112,7 +112,7 @@ $csrf = tokenCsrf();
   <div class="topo">
     <h1>⚙️ Painel Sultemper</h1>
     <div class="acoes">
-      <a href="../index.html" target="_blank">Ver o site ↗</a>
+      <a href="../" target="_blank">Ver o site ↗</a>
       <a href="logout.php">Sair</a>
     </div>
   </div>
@@ -203,6 +203,16 @@ $csrf = tokenCsrf();
       <label>Link do Instagram</label>
       <input type="text" id="c-rodape-instagram" placeholder="https://instagram.com/sultemper" />
       <p class="dica" style="margin-top:10px">O botão de WhatsApp do rodapé usa automaticamente o número configurado acima.</p>
+    </div>
+
+    <!-- Rastreamento -->
+    <div class="cartao">
+      <h2>📊 Códigos de rastreamento</h2>
+      <p class="dica">Cole aqui os códigos completos (com as tags &lt;script&gt;) fornecidos pelo Facebook/Meta Pixel, Google Tag, Google Analytics, GTM etc. Eles são inseridos automaticamente nas páginas do site.</p>
+      <label>Antes do fechamento do &lt;/head&gt;</label>
+      <textarea id="c-rastreamento-head" style="min-height:120px;font-family:monospace;font-size:13px" placeholder="&lt;!-- Meta Pixel, Google tag (gtag.js), GTM... --&gt;"></textarea>
+      <label>Logo após a abertura do &lt;body&gt;</label>
+      <textarea id="c-rastreamento-body" style="min-height:100px;font-family:monospace;font-size:13px" placeholder="&lt;!-- Ex.: &lt;noscript&gt; do GTM --&gt;"></textarea>
     </div>
 
     <!-- Senha -->
@@ -373,6 +383,8 @@ function preencher() {
   $('c-stat1-label').value = DADOS.sobre?.stats?.[1]?.label || '';
   $('c-solucoes-descricao').value = DADOS.solucoes?.descricao || '';
   $('c-processo-subtitulo').value = DADOS.processo?.subtitulo || '';
+  $('c-rastreamento-head').value = DADOS.rastreamento?.head || '';
+  $('c-rastreamento-body').value = DADOS.rastreamento?.body || '';
   $('c-rodape-copyright').value = DADOS.rodape?.copyright || '';
   $('c-rodape-facebook').value = DADOS.rodape?.facebook || '';
   $('c-rodape-linkedin').value = DADOS.rodape?.linkedin || '';
@@ -418,6 +430,10 @@ function colher() {
   DADOS.portfolio = [...document.querySelectorAll('[data-tipo=portfolio]')]
     .map((el) => el.querySelector('.campo-img input[type=text]').value)
     .filter((u) => u.trim() !== '');
+  DADOS.rastreamento = {
+    head: $('c-rastreamento-head').value,
+    body: $('c-rastreamento-body').value,
+  };
   DADOS.rodape = {
     copyright: $('c-rodape-copyright').value,
     facebook: $('c-rodape-facebook').value.trim(),

@@ -7,10 +7,10 @@
  *   2. Aguarde o relatório de download
  *   3. APAGUE este arquivo da hospedagem
  *
- * O que ele faz: baixa as imagens originais (alta resolução) dos links
- * temporários da Figma para a pasta assets/img/, e atualiza o dados.json
- * e o index.html para usarem os arquivos locais — as imagens passam a ser
- * permanentes e independentes da Figma.
+ * O que ele faz: baixa as imagens originais (na melhor resolução que
+ * existe no Figma) para a pasta assets/img/ — o site já aponta para esses
+ * caminhos. Também atualiza o dados.json caso ele ainda contenha links
+ * antigos da Figma. As imagens ficam permanentes e independentes da Figma.
  *
  * IMPORTANTE: os links da Figma expiram em poucos dias. Rode este script
  * o quanto antes. Se algum link já tiver expirado, me peça para gerar
@@ -125,7 +125,7 @@ echo '</ul>';
 
 /* Atualiza dados.json e index.html para os caminhos locais */
 $atualizados = [];
-foreach (['dados.json', 'index.html', 'js/script.js'] as $alvo) {
+foreach (['dados.json'] as $alvo) {
     $caminho = __DIR__ . '/' . $alvo;
     if (!file_exists($caminho)) continue;
     $conteudo = file_get_contents($caminho);
