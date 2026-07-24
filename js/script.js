@@ -78,30 +78,69 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('tPrev').addEventListener('click', () => stepTestimonial(-1));
   document.getElementById('tNext').addEventListener('click', () => stepTestimonial(1));
 
-  /* ---------- Formulários de orçamento ---------- */
+  /* ---------- Header fixo com sombra ao rolar ---------- */
+  const header = document.querySelector('.header');
+  const onScroll = () => {
+    header.classList.toggle('header--scrolled', window.scrollY > 10);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- Formulários de orçamento (envio por e-mail via enviar.php) ---------- */
   document.querySelectorAll('.quote__form').forEach((form) => {
-    form.addEventListener('submit', (event) => {
+    const status = form.parentElement.querySelector('.form-status') || form.querySelector('.form-status');
+    const button = form.querySelector('button[type="submit"]');
+
+    const showStatus = (message, type) => {
+      if (!status) return;
+      status.textContent = message;
+      status.hidden = false;
+      status.classList.remove('form-status--ok', 'form-status--erro');
+      status.classList.add(type === 'ok' ? 'form-status--ok' : 'form-status--erro');
+    };
+
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
 
       const nome = form.querySelector('input[name="nome"]').value.trim();
       const telefone = form.querySelector('input[name="telefone"]').value.trim();
-      const endereco = form.querySelector('input[name="endereco"]').value.trim();
 
-      if (!nome || !telefone) {
-        form.querySelectorAll('input').forEach((input) => {
-          const wrapper = input.closest('.field__input');
-          wrapper.style.borderColor = input.value.trim() ? '' : '#e05656';
-        });
+      let valido = true;
+      [['nome', nome], ['telefone', telefone]].forEach(([name, value]) => {
+        const wrapper = form.querySelector(`input[name="${name}"]`).closest('.field__input');
+        wrapper.style.borderColor = value ? '' : '#e05656';
+        if (!value) valido = false;
+      });
+      if (!valido) {
+        showStatus('Preencha seu nome e telefone para solicitar o orçamento.', 'erro');
         return;
       }
 
-      /* Envio via WhatsApp — troque o número abaixo pelo da Sultemper */
-      const numeroWhatsApp = '5547999999999';
-      const mensagem = encodeURIComponent(
-        `Olá! Gostaria de solicitar um orçamento.\n\nNome: ${nome}\nTelefone: ${telefone}\nEndereço de instalação: ${endereco || 'não informado'}`
-      );
-      window.open(`https://wa.me/${numeroWhatsApp}?text=${mensagem}`, '_blank');
-      form.reset();
+      const originalLabel = button.innerHTML;
+      button.disabled = true;
+      button.style.opacity = '0.7';
+      button.innerHTML = button.innerHTML.replace('Solicitar orçamento', 'Enviando...');
+
+      try {
+        const resposta = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+        });
+        const dados = await resposta.json().catch(() => ({}));
+
+        if (resposta.ok && dados.ok) {
+          showStatus('Pedido enviado com sucesso! Retornaremos em até 24 horas úteis.', 'ok');
+          form.reset();
+        } else {
+          showStatus(dados.erro || 'Não foi possível enviar agora. Tente novamente em instantes.', 'erro');
+        }
+      } catch (erro) {
+        showStatus('Não foi possível conectar ao servidor. Verifique sua internet e tente novamente.', 'erro');
+      } finally {
+        button.disabled = false;
+        button.style.opacity = '';
+        button.innerHTML = originalLabel;
+      }
     });
   });
 });

@@ -202,8 +202,14 @@ img { display: block; }
   padding: 0 var(--gutter);
   border: 1px solid #f2f2f2;
   background: #fff;
-  position: relative;
-  z-index: 10;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: box-shadow 0.25s ease;
+}
+
+.header--scrolled {
+  box-shadow: 0 6px 24px rgba(13, 67, 119, 0.1);
 }
 
 .header__logo img { width: 183.9px; height: 47.2px; object-fit: contain; }
@@ -332,6 +338,12 @@ img { display: block; }
   border-radius: 31px;
   background: var(--grad-stat);
   color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(0, 178, 255, 0.35);
 }
 
 .stat-card__number {
@@ -412,6 +424,12 @@ img { display: block; }
   border-radius: 24px;
   background: var(--card-dark);
   overflow: clip;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sol-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
 }
 
 .sol-card__img { height: 333px; width: 100%; flex-shrink: 0; }
@@ -549,6 +567,39 @@ img { display: block; }
   color: #000;
 }
 
+/* Honeypot anti-spam: invisível para humanos */
+.hp-field {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Mensagem de retorno do envio */
+.form-status {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.64px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.form-status--ok {
+  color: #0c6b3d;
+  background: #e3f7ec;
+  border: 1px solid #b5e6cd;
+}
+
+.form-status--erro {
+  color: #9c2b2b;
+  background: #fdeaea;
+  border: 1px solid #f2c5c5;
+}
+
 /* ============ PROCESSO ============ */
 
 .process {
@@ -589,6 +640,12 @@ img { display: block; }
   padding: 37px 0;
   border-radius: 16px;
   background: var(--process-bg);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.process-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 30px rgba(94, 207, 255, 0.5);
 }
 
 .process-card__icon {

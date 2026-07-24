@@ -109,7 +109,8 @@
         <h2 class="title-xl">Solicite um <span class="title-xl__accent title-xl__accent--bold">orçamento!</span></h2>
         <p class="quote__sub">Informe os seus dados abaixo para solicitar um orçamento gratuito. <strong class="quote__sub-strong">Retornaremos em até 24 horas úteis.</strong></p>
       </div>
-      <form class="quote__form quote__form--row" novalidate>
+      <form class="quote__form quote__form--row" action="enviar.php" method="post" novalidate>
+        <input type="text" name="site" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <div class="field">
           <label class="field__label" for="q1-nome">Seu nome</label>
           <div class="field__input">
@@ -138,6 +139,7 @@
           Solicitar orçamento
         </button>
       </form>
+      <p class="form-status" role="status" hidden></p>
     </section>
 
     <!-- ============ PROCESSO ============ -->
@@ -212,7 +214,8 @@
         <h2 class="title-xl">Solicite um <span class="title-xl__accent title-xl__accent--bold">orçamento!</span></h2>
         <p class="quote__sub">Informe os seus dados abaixo para solicitar um orçamento gratuito.<br /><strong class="quote__sub-strong">Retornaremos em até 24 horas úteis.</strong></p>
       </div>
-      <form class="quote__form quote__form--col" novalidate>
+      <form class="quote__form quote__form--col" action="enviar.php" method="post" novalidate>
+        <input type="text" name="site" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <div class="field">
           <label class="field__label" for="q2-nome">Seu nome</label>
           <div class="field__input">
@@ -235,6 +238,7 @@
           </div>
         </div>
         <button type="submit" class="btn-gradient btn-gradient--full">Solicitar orçamento</button>
+        <p class="form-status" role="status" hidden></p>
       </form>
     </section>
 
