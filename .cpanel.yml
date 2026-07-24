@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home1/sulte890/public_html/site/
+    - /bin/cp -R * $DEPLOYPATH
