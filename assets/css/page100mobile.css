@@ -1,0 +1,14 @@
+@media screen and (max-width: 440px) {
+    .about-btn{
+        margin-bottom: 20px !important;
+    }
+
+    iframe{
+        width: 80%;
+        height: 300px;
+    }
+
+    a.scrollToTop {
+        font-size: 27px;
+    }
+}
