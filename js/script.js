@@ -5,6 +5,83 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   /* ============================================================
+     LOADER — progresso real das imagens da página
+     ============================================================ */
+  (() => {
+    const loader = document.getElementById('loader');
+    if (!loader) return;
+    const fill = document.getElementById('loaderFill');
+    const pct = document.getElementById('loaderPct');
+    const inicio = Date.now();
+    const MIN_EXIBICAO = 600;   // tempo mínimo na tela (ms)
+    const TIMEOUT = 9000;       // nunca prende o visitante além disso
+
+    const imgs = Array.from(document.images);
+    const total = Math.max(imgs.length, 1);
+    let carregadas = 0;
+    let fechado = false;
+
+    const atualizar = () => {
+      const p = Math.min(100, Math.round((carregadas / total) * 100));
+      fill.style.width = p + '%';
+      pct.textContent = p + '%';
+    };
+
+    const fechar = () => {
+      if (fechado) return;
+      fechado = true;
+      fill.style.width = '100%';
+      pct.textContent = '100%';
+      const espera = Math.max(0, MIN_EXIBICAO - (Date.now() - inicio));
+      setTimeout(() => {
+        loader.classList.add('loader--fechado');
+        document.body.style.overflow = '';
+      }, espera + 200);
+    };
+
+    document.body.style.overflow = 'hidden';
+
+    const marcar = () => {
+      carregadas++;
+      atualizar();
+      if (carregadas >= total) fechar();
+    };
+
+    imgs.forEach((img) => {
+      if (img.complete) {
+        marcar();
+      } else {
+        img.addEventListener('load', marcar, { once: true });
+        img.addEventListener('error', marcar, { once: true });
+      }
+    });
+
+    atualizar();
+    if (imgs.length === 0) fechar();
+    window.addEventListener('load', fechar);
+    setTimeout(fechar, TIMEOUT);
+  })();
+
+  /* ============================================================
+     MENU MOBILE
+     ============================================================ */
+  const navToggle = document.getElementById('navToggle');
+  const headerNav = document.getElementById('headerNav');
+  if (navToggle && headerNav) {
+    navToggle.addEventListener('click', () => {
+      const aberto = headerNav.classList.toggle('aberto');
+      navToggle.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+      navToggle.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
+    });
+    headerNav.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        headerNav.classList.remove('aberto');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  /* ============================================================
      UTILIDADES
      ============================================================ */
   const esc = (t) =>
@@ -21,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
      ============================================================ */
   let testimonials = [
     {
-      foto: 'https://www.figma.com/api/mcp/asset/5e543a59-fb59-4c5b-88b1-29cc90d7b50f',
+      foto: 'https://www.figma.com/api/mcp/asset/b610c17c-5ce4-485a-9cf3-286596962a2a',
       nome: 'Arlingo Ludwig - Gerente Operacional',
       empresa: 'Shopping Neumarkt/Blumenau',
       texto:

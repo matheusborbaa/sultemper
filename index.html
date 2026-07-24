@@ -7,14 +7,28 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <!-- Loader Sultemper -->
+  <div class="loader" id="loader">
+    <div class="loader__inner">
+      <div class="loader__panes" aria-hidden="true"><span></span><span></span><span></span></div>
+      <p class="loader__brand"><b>SUL</b>TEMPER</p>
+      <p class="loader__tag">Vidros Temperados</p>
+      <div class="loader__track"><span class="loader__fill" id="loaderFill"></span></div>
+      <p class="loader__pct" id="loaderPct">0%</p>
+    </div>
+  </div>
+
   <div class="page">
 
     <!-- ============ HEADER ============ -->
     <header class="header">
       <a href="#inicio" class="header__logo">
-        <img src="https://www.figma.com/api/mcp/asset/bf5b8fc7-6b37-45df-835b-8fe5c78b9e2b" alt="Sultemper — Vidros Temperados" />
+        <img src="https://www.figma.com/api/mcp/asset/181eb547-1a02-4ead-af56-f85c3aa62a4d" alt="Sultemper — Vidros Temperados" />
       </a>
-      <nav class="header__nav">
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="header__nav" id="headerNav">
         <a href="#inicio" class="nav-link">Início</a>
         <a href="#sobre" class="nav-link">Sobre</a>
         <a href="#solucoes" class="nav-link nav-link--active">Soluções</a>
@@ -42,7 +56,7 @@
     <!-- ============ SOBRE / QUALIDADE ============ -->
     <section class="about" id="sobre">
       <div class="about__glass" aria-hidden="true">
-        <img src="https://www.figma.com/api/mcp/asset/16c5821a-fc7c-4767-a410-ff126bf17bf8" alt="" />
+        <img src="https://www.figma.com/api/mcp/asset/200fb3d8-03df-4c9d-a109-60fbe5205f57" alt="" />
       </div>
       <h2 class="title-xl">Serviço de <strong>qualidade</strong>.&nbsp; <span class="title-xl__accent title-xl__accent--black">Valor incomparável.&nbsp;</span></h2>
       <p class="about__text" id="sobreTexto">Com mais de duas décadas de experiência, a <strong class="about__brand">Sultemper</strong> dedica-se ao ramo de construção civil fornecendo mão de obra qualificada e sistemas de altíssimo nível para promover requinte, beleza e sofisticação em sua obra.</p>
@@ -68,7 +82,7 @@
       <div class="solutions__track" id="solutionsTrack">
         <article class="sol-card">
           <div class="sol-card__img">
-            <img src="https://www.figma.com/api/mcp/asset/a56e13e5-6e7e-4899-82a2-31d3d8154ba7" alt="Esquadrias em alumínio" />
+            <img src="https://www.figma.com/api/mcp/asset/f275706f-5f2c-48df-adee-f7889b55bd6c" alt="Esquadrias em alumínio" />
           </div>
           <div class="sol-card__body">
             <h3 class="sol-card__title">Esquadrias em alumínio</h3>
@@ -77,7 +91,7 @@
         </article>
         <article class="sol-card">
           <div class="sol-card__img">
-            <img src="https://www.figma.com/api/mcp/asset/df0ffdf3-72a0-40df-955e-eb4ec041be98" alt="Sistema 100% de Abertura" />
+            <img src="https://www.figma.com/api/mcp/asset/990fe627-2ef5-44be-a250-913e3e3f11fb" alt="Sistema 100% de Abertura" />
           </div>
           <div class="sol-card__body">
             <h3 class="sol-card__title">Sistema 100% de Abertura</h3>
@@ -86,7 +100,7 @@
         </article>
         <article class="sol-card">
           <div class="sol-card__img">
-            <img src="https://www.figma.com/api/mcp/asset/be1aa19a-3003-4c74-8c69-f134d2f9c44d" alt="Projeto Personalizado" />
+            <img src="https://www.figma.com/api/mcp/asset/fa2ebc63-2cc6-42c5-a02f-163ab06a41a0" alt="Projeto Personalizado" />
           </div>
           <div class="sol-card__body">
             <h3 class="sol-card__title">Projeto Personalizado</h3>
@@ -94,12 +108,14 @@
           </div>
         </article>
       </div>
-      <button class="arrow-btn solutions__arrow solutions__arrow--prev" data-dir="-1" aria-label="Anterior">
-        <img src="assets/icons/chevron.svg" alt="" />
-      </button>
-      <button class="arrow-btn solutions__arrow solutions__arrow--next" data-dir="1" aria-label="Próximo">
-        <img src="assets/icons/chevron.svg" alt="" />
-      </button>
+      <div class="solutions__nav">
+        <button class="arrow-btn solutions__arrow solutions__arrow--prev" data-dir="-1" aria-label="Anterior">
+          <img src="assets/icons/chevron.svg" alt="" />
+        </button>
+        <button class="arrow-btn solutions__arrow solutions__arrow--next" data-dir="1" aria-label="Próximo">
+          <img src="assets/icons/chevron.svg" alt="" />
+        </button>
+      </div>
     </section>
 
     <!-- ============ ORÇAMENTO (horizontal) ============ -->
@@ -174,12 +190,12 @@
 
     <!-- ============ GALERIA / PORTFÓLIO ============ -->
     <section class="gallery" id="portfolio">
-      <div class="gallery__item"><img src="https://www.figma.com/api/mcp/asset/7cc59cda-630f-4d4e-ba34-4f06df1c9e2b" alt="Projeto Sultemper" /></div>
-      <div class="gallery__item"><img src="https://www.figma.com/api/mcp/asset/d4da960f-1c58-4b63-ad5b-de827b625856" alt="Projeto Sultemper" /></div>
-      <div class="gallery__item"><img src="https://www.figma.com/api/mcp/asset/c35c4ca8-2ba7-4943-8120-7fc7b282e3c4" alt="Projeto Sultemper" /></div>
-      <div class="gallery__item"><img src="https://www.figma.com/api/mcp/asset/3b36cf15-2f98-4c7e-b1ce-7062ca84e844" alt="Projeto Sultemper" /></div>
-      <div class="gallery__item"><img src="https://www.figma.com/api/mcp/asset/8deb1f9a-0567-4898-a308-a4a27e5ccc5d" alt="Projeto Sultemper" /></div>
-      <div class="gallery__item"><img src="https://www.figma.com/api/mcp/asset/be1aa19a-3003-4c74-8c69-f134d2f9c44d" alt="Projeto Sultemper" /></div>
+      <div class="gallery__item"><img src="https://www.figma.com/api/mcp/asset/403e8638-f809-4031-ab6d-6212d6cc321c" alt="Projeto Sultemper" /></div>
+      <div class="gallery__item"><img src="https://www.figma.com/api/mcp/asset/696bc119-d50f-4936-a608-244007621d57" alt="Projeto Sultemper" /></div>
+      <div class="gallery__item"><img src="https://www.figma.com/api/mcp/asset/00482407-8a38-4fb9-ab90-14c04749d63f" alt="Projeto Sultemper" /></div>
+      <div class="gallery__item"><img src="https://www.figma.com/api/mcp/asset/d6990752-cb13-4460-a3f8-ad5d563ccf09" alt="Projeto Sultemper" /></div>
+      <div class="gallery__item"><img src="https://www.figma.com/api/mcp/asset/d8578fbd-51ca-4ac2-bc9e-66eb7dc7ad49" alt="Projeto Sultemper" /></div>
+      <div class="gallery__item"><img src="https://www.figma.com/api/mcp/asset/fa2ebc63-2cc6-42c5-a02f-163ab06a41a0" alt="Projeto Sultemper" /></div>
     </section>
 
     <!-- ============ DEPOIMENTOS ============ -->
@@ -191,7 +207,7 @@
       </div>
       <div class="testimonial-card" id="testimonialCard">
         <div class="testimonial-card__person">
-          <img class="testimonial-card__avatar" id="tAvatar" src="https://www.figma.com/api/mcp/asset/5e543a59-fb59-4c5b-88b1-29cc90d7b50f" alt="Foto do cliente" />
+          <img class="testimonial-card__avatar" id="tAvatar" src="https://www.figma.com/api/mcp/asset/b610c17c-5ce4-485a-9cf3-286596962a2a" alt="Foto do cliente" />
           <p class="testimonial-card__name" id="tName">Arlingo Ludwig - Gerente Operacional</p>
           <p class="testimonial-card__company" id="tCompany">Shopping Neumarkt/Blumenau</p>
         </div>
